@@ -1,0 +1,167 @@
+%===============================================================================
+\section{Background}
+\label{section:background}
+
+%-------------------------------------------------------------------------------
+% Responsible students
+%-------------------------------------------------------------------------------
+
+\textbf{Responsible students: Viktor Eriksson, Carl Larsson, Fredrik Westerbom}
+
+%-------------------------------------------------------------------------------
+% Introduction
+%-------------------------------------------------------------------------------
+
+The background section explains key algorithms and concepts, providing readers with the foundational understanding necessary to understand the reasoning behind the methods and choices of this paper. This will enable a better appreciation for the papers contents and contributions. 
+
+%-------------------------------------------------------------------------------
+% Hardware
+%-------------------------------------------------------------------------------
+
+% Kicker
+
+% Sensors
+Sensors are an essential part of mobile robotics, providing localization information, allowing for object detection and identification, offering self-monitoring capabilities, and enabling any other data collection task which might be necessary for the robot\:\cite{alatise_review_2020}.
+% Exteroceptive and proprioceptive sensors
+Sensors which are used for data collection can be categorized into two categories, proprioceptive and exteroceptive\:\cite{alatise_review_2020}. Exteroceptive sensors obtain information which is external to the robot, its environment, for example detecting obstacles using \ac{lidar}\:\cite{alatise_review_2020}. Meanwhile proprioceptive sensors obtain information which is internal to the robot, like its heading from an \ac{imu}\:\cite{alatise_review_2020}.
+
+% Active and passive sensors
+Sensors can be further divided into sensors which must use system energy to function, known as active sensors, and sensors which detects energy originating from the environment, known as passive sensors\:\cite{alatise_review_2020}.
+% Write about each sensor, what it does and why it is used in robotics.
+% IMU
+An \ac{imu} is a sensor with multiple sensors included, such as a gyroscope, accelerometer, and depending on the number of axis, a magnetometer included \cite{insert_source}. 
+% RGB
+% Optical Encoder
+% Camera
+% Lidar (ToF)
+
+%-------------------------------------------------------------------------------
+% Individual robot behaviour
+%-------------------------------------------------------------------------------
+
+% Sensor fusion
+Sensor fusion combines the information from multiple sensors, where each sensor can complement the weakness or shortcomings of another sensor, therefore reducing the uncertainty, as well as improving the robustness and accuracy of a platform\:\cite{tian_sensor_2022},\cite{alatise_review_2020}. Most proprioceptive sensors which are used for odometry (like \acp{imu} and wheel encoders) suffer to much drift (and sometimes noise) to be used alone, hence necessitating the use of multiple sensors and sensor fusion\:\cite{alatise_review_2020}. The need for sensor fusion of exteroceptive sensors is also evident when considering something so common as different environmental conditions, while a camera might be required for some tasks by the system, solely relying on a camera is inadequate given the possibility of scenarios with poor visibility\:\cite{alatise_review_2020}.
+% KF intro and algorithm
+A common sensor fusion and localization method is the \acf{kf}, a recursive algorithm which uses the previous iterations estimate for calculating the next iterations estimate\:\cite{macenski_desks_2023},\cite{corke_robotics_2023}.
+The \ac{kf} algorithm consists of two steps during each iteration, the prediction step where an estimate is made (increasing uncertainty), and the update step which corrects the estimate from the prediction step (decreasing uncertainty)\:\cite{macenski_desks_2023},\cite{corke_robotics_2023}. The original \ac{kf} only works for linear systems, but the \ac{ekf} and \ac{ukf} were developed to handle non-linear systems\:\cite{macenski_desks_2023},\cite{corke_robotics_2023}. 
+\ac{ukf} also improves accuracy by employing better sampling for better estimations of the mean and covariance of the distribution, while keeping the same computational complexity as \ac{ekf}\:\cite{wan_unscented_2000}.
+It is important to be aware that the \ac{kf} assumes that all errors have a Gaussian distribution\:\cite{corke_robotics_2023}.
+
+% Intro to localization
+Localization is used to estimate the pose of a robot and is key for enabling autonomous systems to navigate safely and accurately\:\cite{akail_reliability_2018}.
+% Localization
+It is commonly divided into two sub categories: local (or relative) localization, which estimates the pose relative to a reference point (like the starting point); and global (or absolute) localization, where the pose is determined within a fixed reference frame (like a map)\:\cite{alatise_review_2020},\cite{thrun_probabilistic_2006},\cite{corke_robotics_2023}. 
+% Naming
+This paper will use the terms local and global localization.
+% Methods
+Local localization is normally reliant and calculated using odometry\:\cite{alatise_review_2020}.
+Numerous methods exist for global localization, including \ac{gps} and map matching (can involve \ac{slam})\:\cite{alatise_review_2020}.
+% AMCL intro
+\acf{amcl} is a type of \acf{pf} which is capable of handling multiple hypotheses about the robot state (unlike \acp{kf}), and has both local and global localization capabilities\:\cite{thrun_probabilistic_2006},\cite{corke_robotics_2023}. It is non parametric, can handle data of any distribution and can use raw sensor data directly without the need for extracting features\:\cite{thrun_probabilistic_2006},\cite{corke_robotics_2023}. 
+% AMCL algorithm
+% Initialization
+The \ac{amcl} algorithm begins by initializing particles, representing possible robot states, by randomly distributing them across the entire pose space\:\cite{corke_robotics_2023},\cite{thrun_probabilistic_2006}. 
+If some prior knowledge about the starting pose is known, then the particles can be initialized to reflect this\:\cite{corke_robotics_2023}. 
+To begin with, the particles are all given equal weight (their likelihood of being the "true state" of the robot)\:\cite{corke_robotics_2023},\cite{thrun_probabilistic_2006}. 
+% Motion model
+The particles are then subjected to the measured odometry in order to update their position with regards to the movement, this is the motion model of the algorithm\:\cite{corke_robotics_2023},\cite{thrun_probabilistic_2006}. 
+% Observation model
+Following this, the particles are scored whenever new observational data is available\:\cite{corke_robotics_2023},\cite{thrun_probabilistic_2006}. The score is based on how well each particle explains the new observation, updating their weights accordingly, this is the observation model of the algorithm (also goes by names like sensor model)\:\cite{corke_robotics_2023},\cite{thrun_probabilistic_2006}. 
+% Resampling
+After this, a resampling is done to create the next "cluster" of particles, where better scoring particles are more likely to be selected\:\cite{corke_robotics_2023},\cite{thrun_probabilistic_2006}. 
+This will cause the particle clusters to start to gravitate towards the most likely estimates of the robot state, with varying density depending on the uncertainty of the state estimate\:\cite{corke_robotics_2023}. 
+The cluster represents the state uncertainty because it encodes the distribution, containing both the mean and the variance of the estimate\:\cite{corke_robotics_2023}. 
+% Adaptive
+The number of particles in the next generation is dynamically adjusted by \ac{amcl}, balancing efficiency and accuracy\:\cite{corke_robotics_2023}. 
+% Spread
+Finally a random spread is introduced to the cluster before the next iteration to prevent the algorithm from degenerating to single solutions\:\cite{corke_robotics_2023}.
+
+% Quote
+Now that both \acp{kf} and \acp{pf} (in the form of \ac{amcl}) have been introduced, a great quote by Corke et al. which summaries the fundamental difference between the two when used for state estimation: "Particle filters can be considered as providing an approximate solution to the true system model, whereas a Kalman filter provides an exact solution to an approximate system model"\:\cite{corke_robotics_2023}.
+
+% Computer vision
+Digital image object detection and recognition can be done using a computer vision technique called object recognition\:\cite{alatise_review_2020},\cite{loncomilla_object_2016}. 
+% Unused division
+A review by Alatise et al. divides object recognition methods into feature based approaches, which extracts distinct features (using algorithms like \ac{surf}) for matching; colour based approaches, which rely on \ac{rgb} features; and appearance based approaches, which account for changes in colour, size and shape\:\cite{alatise_review_2020}. 
+% Division
+A different classification is based on local and global descriptions of objects\:\cite{loncomilla_object_2016}. Global description methods focus on the objects as a whole, whereas local description methods searches for points of interest within the objects, called key points. These key points are represented by their surrounding regions, which form a local feature known as a descriptor\:\cite{loncomilla_object_2016}. 
+% This paper
+This paper will use the local and global description categorization, which is extensively covered in\:\cite{loncomilla_object_2016}, a survey by Loncomilla et al.. 
+% Algorithm local descriptions
+The pipeline for local description algorithms generally follow the structure of first computing local interest points, after which the descriptors around the local interest point is computed\:\cite{loncomilla_object_2016}. A matching stage then takes place where the image under analysis is compared to a database\:\cite{loncomilla_object_2016}. Finally, Geometric Verification of Matched Features where the matches are analysed and the incorrect ones are rejected\:\cite{loncomilla_object_2016}.
+% Advantages
+Local-based methods offer several advantages like good online performance, being robust against occlusions and varying view points, and not needing object segmentation\:\cite{loncomilla_object_2016}.
+
+% Path planning
+Path planning, which ensures an autonomous robot gets from a start point to a target point without any collisions, is commonly divided into two parts: global path planning, also known as static or offline path planning, or sometimes just called path planning; and local path planning, also refereed to as obstacle avoidance, dynamic path planning or online path planning\:\cite{cai_mobile_2021},\cite{liu_path_2023}. 
+% Naming
+This paper will use the terms global and local path planning to denote the two. 
+% Local vs global
+If one adopts a very simple perspective, then global path planning could be seen as handling the static aspects of path planning, finding a path through the known environment (like a map)\:\cite{cai_mobile_2021},\cite{macenski_desks_2023},\cite{alatise_review_2020}. The dynamic aspects of path planning is the task of the local path planner, which entails navigating through the unknown dynamic environment present in most real applications\:\cite{cai_mobile_2021},\cite{macenski_desks_2023},\cite{alatise_review_2020}.
+% Centralized vs decentralized
+Local path planning in \acp{mrs} can be further divided into centralised and decentralised approaches\:\cite{vesentini_survey_2024}.
+% Centralised
+Centralised is a computation heavy approach which does not scale well, where a central unit handles the navigation and the associated processing of each robot\:\cite{vesentini_survey_2024}. It is not realistic in real-world applications, although it does provide safe navigation\:\cite{vesentini_survey_2024}.
+% Decentralised
+Popular decentralised methods which are viable in dynamic environments include \ac{apf}, \ac{dwa} and \ac{vo}\:\cite{vesentini_survey_2024}. Decentralised methods usually suffers from non-trivial tuning of parameters\:\cite{macenski_desks_2023}, but they are highly adaptable to both different robotic platforms and dynamic situations\:\cite{vesentini_survey_2024}.
+
+% A*
+The common heuristic based global path planning algorithm A$^*$ offers computational speed over optimality and completeness\:\cite{rachmawati_analysis_2020},\cite{foead_systematic_2021}. It was developed by Hart et al.\:\cite{hart_formal_1968} and it obtains its efficiency through its use of a heuristic which focuses its search in the direction of the goal rather than searching in all directions\:\cite{rachmawati_analysis_2020},\cite{foead_systematic_2021},\cite{bhateja_performance_2021}. The main disadvantages of the algorithm is that it is most effective in known environments where it can make use of its heuristic information, that it scales poorly with larger maps, and its lack of guarantee for finding the shortest path\:\cite{foead_systematic_2021},\cite{patel_comparative_2021},\cite{ogata_generic_2020}.
+% DWA
+\ac{dwa} is a local path planning method developed by Fox et al. which considers the physical constraints of a robot by integrating the motion dynamics of the robot into the method\:\cite{fox_dynamic_1997}. It obtains steering commands by considering a small time period from which it searches for velocities $(v, \omega)$, in the proximity of the current velocity, that are physically reachable by the robot, and then projects these forward to generate trajectories\:\cite{fox_dynamic_1997},\cite{macenski_desks_2023}. These trajectories are sampled, pruning any unsafe ones, and then evaluated by critic functions (also known as objective functions), these can encode distance to obstacles or any other desired behaviour\:\cite{fox_dynamic_1997},\cite{macenski_desks_2023}.
+
+%-------------------------------------------------------------------------------
+% Collective robot behaviour
+%-------------------------------------------------------------------------------
+
+%mappo
+There is many strategies in football, and to define them all is a big task. There by an AI model with defined pattern recognition could find these different strategy's and learn how to develop and overcome them. To define all strategy's, a \ac{rl} method could be beneficial because of its interactive learning from the environment and actions. \ac{mappo} is a multi agent approach to the On-policy \ac{ppo} algorithm which is mainly for a single unit \ac{rl}. \ac{ppo} are designed with two separate neural networks named policy (also known as actor) and critic. The critic network is mainly used while training thus could also be used to detain local variables. When using \ac{ppo} in a multi-agent environment does not provide a strong performance. There for \ac{mappo} is developed by the same manner but for multiple agents.
+
+%policy network
+Agents use the policy network to produce an action from the current states \cite{yu_surprising_2022}. 
+
+%critic network
+The critic network is used for variance reduction \cite{yu_surprising_2022}. 
+
+%Hur mappo är annorlunda från PPO men ändå lika
+\ac{mappo} is a centralised model and a beneficial for all agents to share their parameters.
+Instead of each agent having its own independent policy and critic networks, a single shared policy network and critic network is instead used. This approach ensures that all agents utilize the same parameters for each agent's decision-making \cite{yu_surprising_2022}.
+
+%input state 
+The input states to the \ac{mappo} model differ depending on the environment and agents.
+A concatenating method is by global state which is formed by concatenating all local agent observations from the agents, it can be used in most environments but its dimensionality grows with the number of agents and can lead to value learning difficulties \cite{yu_surprising_2022}. Another method when using global information is \ac{ep} where global environments information is received and omits important local agent information as observations, this to detain a standard input for the model depending on the agent \cite{yu_surprising_2022}.
+
+%Actions
+The action space for the agents is to detain a control of the environment. One report used 19 discrete actions in a football-simulated environment such as most basic movements like up, down, right, left, shoot, and pass. It also used a method to accelerate the learning phase by an action mask that takes out any illegal actions by setting their probabilities to zero\cite{lin_tizero_2023}.
+
+%rewards
+The reward function is feedback to the agents to guide them on whether their decisions resulted in a good outcome or not. These rewards can be either positive or negative, depending on whether the action has a beneficial or detrimental effect on the task. 
+For \ac{mappo}, a global reward is achieved by summation of all agents' individual rewards. This is for a team reward/punishment because each agent's action depends on the results of the teams' performance \cite{yu_surprising_2022}. From one paper using a football environment, they developed a method to determine rewards and punishments\cite{lin_tizero_2023} A reward is given when scoring a goal, holding the ball and successfully passing the ball. A punishment is given when conceding a goal, all agents are grouped too close together and the agent is out of bounds. When training the model by self-playing, a requirement is that the summation of both teams' rewards and penalties is equal to zero \cite{lin_tizero_2023}.
+
+%loss function?
+
+%Papers:
+%https://arxiv.org/pdf/2302.07515 \cite{lin_tizero_2023}
+%https://arxiv.org/pdf/2103.01955 \cite{yu_surprising_2022}
+%https://ieeexplore-ieee-org.ep.bib.mdh.se/document/10168653
+
+
+
+%-------------------------------------------------------------------------------
+% Interfaces API
+%-------------------------------------------------------------------------------
+
+\subsection{Off-field Applications}
+
+\subsubsection{SSL Vision}
+
+
+\subsubsection{SSL Game Controller}
+
+%===============================================================================
+
+\begin{comment}
+In this section, you provide the knowledge the reader needs to understand your work and your contribution. Present fundamental knowledge needed to understand the field and the task. For example, you can explain relevant theories and concepts you use or introduce mathematical notation. Write the background so that someone familiar with the area can skip it. 
+\end{comment}
+
+%===============================================================================

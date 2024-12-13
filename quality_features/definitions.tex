@@ -1,0 +1,29 @@
+%===============================================================================
+% Do definitions here
+
+%-------------------------------------------------------------------------------
+% Syntax and standards
+
+% Fix correct table label and caption formating
+\renewcommand{\thetable}{\Roman{table}}
+\captionsetup[table]{format=plain, labelsep=newline}
+
+% Fix correct figure label and caption formating
+\captionsetup[figure]{labelfont=bf, labelsep=period, font={footnotesize}, textfont={it}}
+\renewcommand{\figurename}{Fig.}
+
+%-------------------------------------------------------------------------------
+% Colors
+
+% Table head color
+\definecolor{light_grey}{RGB}{150, 150, 150}
+
+%-------------------------------------------------------------------------------
+% 
+
+% Fix linking to tables offset
+\newcommand{\settarget}[1]{%
+  \zlabel{#1}%
+}
+
+%===============================================================================

@@ -1,0 +1,116 @@
+%===============================================================================
+% Template stuff
+
+\documentclass[times]{thesisMDU}
+\usepackage[british,style=iso]{datetime2}  
+
+% !!! NEEDS TO BE EDITED !!!
+\fancyHeader{Multi-robot Soccer - RoboCup}{V. Eriksson et al.}
+%\fancyHeader{Short title of the thesis}{Authors}
+
+\university{Mälardalen University}
+\department{School of Innovation Design and Engineering\\ Västerås, Sweden}
+
+%===============================================================================
+% Includes
+
+\input{quality_features/packages}
+
+%===============================================================================
+% Title
+
+\subject{Project report for Project Courses in Robotics \& Intelligent embedded systems \\ Robotics \& Intelligent embedded systems 30.0 credits}
+%\subject{Thesis for the Degree of Master of Science in Engineering \\ Robotics 30.0 credits}
+\thesisTitle{Multi-robot Soccer - RoboCup}
+
+%===============================================================================
+% Authors
+
+\addAuthor{Viktor Eriksson}{ven20002@student.mdu.se}
+\addAuthor{Anton Grusell}{agl19003@student.mdu.se}
+\addAuthor{Mudar Ibrahim}{mim20004@student.mdu.se}
+\addAuthor{Jacob Johansson}{jjn20030@student.mdu.se}
+\addAuthor{Aiza Aziz Khan}{akn23018@student.mdu.se}
+\addAuthor{Carl Larsson}{cln20001@student.mdu.se}
+\addAuthor{Johanna Melander}{jmr19002@student.mdu.se}
+\addAuthor{Shruti Puthiya Kunnon}{spn23001@student.mdu.se}
+\addAuthor{Pontus Svensson}{psn19003@student.mdu.se}
+\addAuthor{Fredrik Westerbom}{fnl18001@student.mdu.se}
+\addAuthor{Emil Åberg}{eag24002@student.mdu.se}
+
+%===============================================================================
+% Supervisors
+
+\addSupervisor{Examiner}{Mikael Ekström}{Mälardalen University, Västerås}
+\addSupervisor{Supervisor}{Emil Persson}{Mälardalen University, Västerås}
+%\addSupervisor{Supervisor}{First Lastname}{Company Name, City}
+
+%===============================================================================
+% Sections and references
+
+% !!! Do not touch !!!
+\begin{document}
+\titlePage
+\frontmatter
+\input{sections/abstract}
+\newpage
+
+%========= Tables ==========
+
+% !!! Do not touch !!!
+{\hypersetup{linkcolor=black}\tableofcontents\clearpage}
+{\hypersetup{linkcolor=black}\listoffigures\clearpage}
+{\hypersetup{linkcolor=black}\listoftables\clearpage}
+{\hypersetup{linkcolor=black}\input{quality_features/acronym}\clearpage} 
+\mainmatter
+
+% ===== Content: Modify the structure according to your needs =======
+
+% Definitions etc
+\input{quality_features/definitions}
+
+\input{sections/introduction}
+\newpage
+\input{sections/background} %SOTA
+\newpage
+\input{sections/relatedWork}
+\newpage
+%\input{sections/etics}
+%\newpage
+\input{sections/method}
+%\newpage
+%\input{sections/contribs}
+\newpage
+\input{sections/results}
+\newpage
+\input{sections/discussion}
+\newpage
+\input{sections/conclusions}
+\newpage
+\input{sections/acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+% ============================= References ============================
+
+\newpage
+% Adjust the bibliography spacing between references to fit IEEEtran
+\setlength{\bibsep}{0pt plus 0.3ex}
+% abbrvnat is the style for IEEEtran
+\bibliographystyle{abbrvnat}
+\bibliography{references}
+\addcontentsline{toc}{section}{References}
+
+% ============================ Appendices =============================
+
+%\begin{appendices}
+	%\input{appendices/appendices1}
+	%\clearpage
+	%\input{appendices/appendices2}
+	%\clearpage
+%\end{appendices}
+
+%===============================================================================
+
+\end{document}
+
+%===============================================================================

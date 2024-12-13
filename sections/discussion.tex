@@ -1,0 +1,85 @@
+%===============================================================================
+\section{Discussion}
+\label{section:discussion}
+
+%-------------------------------------------------------------------------------
+% Responsible students
+%-------------------------------------------------------------------------------
+
+\textbf{Responsible students: Carl Larsson}
+
+%-------------------------------------------------------------------------------
+% Results
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% Method
+%-------------------------------------------------------------------------------
+
+% Priority
+Future work is recommended to place more focus on hardware
+
+% Gears
+Investigate the use of hypoidgear
+
+% Chassis
+Chassis out of carbon fiber
+
+% Dribbler motor
+Use smaller dribbler motor
+
+% PCB design
+its heavy
+A more thorough design without time limitations, allowing for a better board
+
+% Sensors
+Use other sensors (lidar, rgb especially) since these were just forced on us and no thought have been put into them. 
+
+% Motor control
+Problems with stm ide, DO NOT USE IT
+Problems with UART for motors
+
+% Bearing cutout for wheels
+Bearing cutouts are not exact since they are cutout by hand
+
+% DWB
+DWB has been found to have suboptimal behaviour when its parameters, some of which are interrelated, has not been tuned correctly, which is a complex process\:\cite{macenski_desks_2023}.
+
+% Kicker
+The use of linear bearings for the solenoid could help with stability at the cost of taking up more space\:\cite{chen_zjunlict_2018}.
+
+% No global path planning
+Global path planning is not strictly necessary for the application of this robot and could be removed (if not for the software stack used) to reduce computational load.
+
+% Stability
+Lyapunov tests were not done, hence no part of the system can be guaranteed to be stable\:\cite{borkar_stability_2023}.
+
+% FOC Wizard
+Delft did not get \acs{foc} wizard to work.
+
+%-------------------------------------------------------------------------------
+% Future work
+%-------------------------------------------------------------------------------
+
+% SSL vision problems
+\ac{ssl}-vision is unreliable, future work should implement methods which account for and mitigates this\:\cite{huang_zjunlict_2019},\cite{bohm_er-force_2024}.
+
+% Wheel problems
+Future work should attempt increasing the number of subwheels to reduce the "polygon effect", Swedish wheels are not perfectly circular but polygonal, becoming more circular as the number of subwheels increase\:\cite{chen_zjunlict_2018}.
+
+% Basestation
+No basestation with radio communication, WiFi was used instead which is significantly worse in terms of interference. Future work should focus on developing a good communication system which is not vulnerable to interferance.
+
+% Robot ID
+No way of identifying robots was developed, this was left as a future problem to solve.
+
+% More optimal solutions
+The use of \acs{slam}-Toolbox is not optimal, future research should investigate more light weight solutions which excludes the use of \ac{slam}
+
+%===============================================================================
+
+\begin{comment}
+Here you present the interpretation of the results and assess their significance. Discuss possible implications of the results, and offer possible recommendations. You must report on whether you have achieved the objectives you set out, answering your research question and achieving the aim of your work. The section should also include reflections on the job and its limitations.  You can also discuss solutions to problems that you have identified and discussed earlier or address other issues that the work did not address, questions that were not answered. Also, link your findings to previous work. This way, the discussion can become a conversation with what you wrote in the last section.  Finally, put your work in a broader context, and broaden your perspective. Can your results be generalised? Can what you have done be used in some other context?
+\end{comment}
+
+%===============================================================================

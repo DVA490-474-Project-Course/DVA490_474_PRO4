@@ -1,0 +1,138 @@
+%===============================================================================
+\section{Introduction}
+\label{section:introduction}
+
+%-------------------------------------------------------------------------------
+% Responsible students
+%-------------------------------------------------------------------------------
+
+\textbf{Responsible students: Carl Larsson}
+
+%-------------------------------------------------------------------------------
+% Presentation of the field and topic of the work.
+%-------------------------------------------------------------------------------
+
+% Introducing SSL-RoboCup
+The \ac{ssl}-RoboCup is a tournament where autonomous robots play football\:\cite{da_silva_costa_multi-robot_2024}. RoboCup aims to advance the state of the art for intelligent robots\:\cite{robocup_small_size_league_small_2024}. 
+% Divisions
+There are two different divisions, A and B, with A being the division for more advanced teams\:\cite{robocup_small_size_league_rules_2024}. Division A plays on a $12\:\text{m} \times 9\:\text{m}$ field with eleven robots\:\cite{da_silva_costa_multi-robot_2024},\cite{robocup_small_size_league_rules_2024}. Meanwhile, division B plays with only six robots on a $9\:\text{m} \times 6\:\text{m}$ field\:\cite{da_silva_costa_multi-robot_2024},\cite{robocup_small_size_league_rules_2024}. 
+% Constraints
+Each robot needs to be designed to fit inside a cylinder with a diameter of $0.18$\:\ac{m} and a height of $0.15$\:\ac{m}\:\cite{robocup_small_size_league_rules_2024}. The robots are allowed to have both a kicking and a dribbling device\:\cite{robocup_small_size_league_rules_2024}. The ball used is an orange golf ball which is not allowed to be kicked so that it moves faster than $6.5$\:\ac{m/s} \cite{robocup_small_size_league_rules_2024}. 
+% Time
+An \ac{ssl}-RoboCup match consists of first half, half-time break and second half, each one lasting for a period of $300$\:\ac{s}, with the possibility of overtime and shoot-out to settle draws\:\cite{robocup_small_size_league_rules_2024}.
+
+%-------------------------------------------------------------------------------
+% Brief overview of previous work and its limitations 
+%-------------------------------------------------------------------------------
+
+% Custom-built
+Previous work within \ac{ssl}-RoboCup has placed significant focus on optimizing robot performance by developing custom-built elements, with every competitive team relying primarily on custom-built elements. This has resulted in various solutions, most of which follow a general trend yet still remaining distinct. 
+% In common
+The few elements which are not custom built are usually shared between different teams, like the common use of an STM32, \ac{foc} and direct drive (see Section\:\ref{section:previous_work})\:\cite{veeraghanta_2024_2024},\cite{abousaleh_2024_2024},\cite{liang_icrs-fc_2024},\cite{delft_mercurians_delft_2024},\cite{salehi_immortals_2024},\cite{ryll_extended_2020}. A common feature present in most teams' design is the effort to lower the robot's centre of gravity\:\cite{huang_zjunlict_2020}.
+% Limitations and challenges
+One of the major challenges in \ac{ssl}-RoboCup is the unreliable \ac{ssl}-vision system and the derived problem of obtaining accurate localization information of the robots without this system\:\cite{huang_zjunlict_2019},\cite{bohm_er-force_2024},\cite{melo_towards_2022}.
+
+%-------------------------------------------------------------------------------
+% Presentation of the assignment including purpose and research questions
+% Motivation: why the task is interesting, what the relevant questions are, why your approach is good and why the results are essential.
+%-------------------------------------------------------------------------------
+
+% Project name and target audiance
+This paper covers the project Multi-Robot Soccer - RoboCup, this report might interest robotic enthusiasts, collaborative institutions and the academia community of robotic related fields. 
+% Project information
+The goal is to develop one \ac{ssl}-RoboCup division B robot, and the accompanying software for controlling an entire team of robots, where the software will be tested in simulation. It is a collaboration project between \ac{mdu}, \ac{udea} and \ac{utp}, with the intention of strengthening the skills of working in larger multi cultured groups.
+% Purpose
+The purpose of the project is to further the \ac{mrs} research at \ac{mdu}, contribute to the \ac{ssl}-RoboCup community and help internationalize the masters program in robotics at \ac{mdu}.
+% Motivation
+% internationalize
+Today's society and the industry is becoming increasingly globalized, placing a strong demand on internalization and ability to work in multi cultured groups\:\cite{cotton_interaction_2013},\cite{zhou_analysis_2017}. This trend has only intensified in both businesses and academia, quickly making it a requirement that the members of these entities have the capacity to work in cross cultural environments\:\cite{zhou_analysis_2017}.
+Internalization is crucial for these entities\:\cite{zhou_analysis_2017}, it offers expanded markets (and thus less reliance on a single market), partnership opportunities, competitiveness, affiliates with diverse skills and toolsets, as well as cultural exchange and understanding.
+% AI and robotics
+The importance of \ac{ai} and robotics is evident based on the increasing amount of use cases and application areas of \ac{ai} and robotics\:\cite{singh_artificial_2022},\cite{cai_mobile_2021},\cite{rahman_tahir_localization_2022}. \ac{ai} research has seen significant progress and the greatly increased demand for robotics has gained it a lot of attention and development\:\cite{singh_artificial_2022},\cite{cai_mobile_2021},\cite{rahman_tahir_localization_2022}. The demand extends beyond the massive industry sector demands to most other sectors  like personal, agriculture and healthcare, at this point even becoming integral in many sectors\:\cite{rahman_tahir_localization_2022},\cite{alatise_review_2020}.
+% Universities
+Universities must stay on top of these advances in order to offer relevant education, find new innovative research areas, maintain reputation and appeal, obtain funding and partnership opportunities, and be able to contribute to society. 
+% Other benefits
+Other benefits of advancing the \ac{ai} and robotic fields include cost reductions, decreased labour requirements (for dangerous, dirty and dull jobs), shorter work times, and positive environmental impact\:\cite{rahman_tahir_localization_2022}.
+% Why multi robot systems
+Robotics have numerous applications like construction and manufacturing, logistics and warehouse, search and rescue, to name only a few\:\cite{singh_artificial_2022},\cite{marquis_robotics_2020},\cite{de_sousa_multi-agent_2024}. Most of these tasks could be completed without a \ac{mrs}, but \acp{mrs} have proven capable of offering better performance, e.g. in terms of efficiency\:\cite{de_sousa_multi-agent_2024}.
+% Connect to SSL
+In order to address the presented information, there is the excellent opportunity to work with the popular \ac{ssl}-RoboCup competition\:\cite{marquis_robotics_2020}, with the goal of improving intelligent \acp{mrs}.
+
+% Problem formulation
+The problem in this project is getting a \ac{mrs} consisting of 6 robots to play football, with real-time\footnote{'Real-time', in the context of this paper, refers to a response time of less than $20\:$\ac{ms}.} strategic coordination in a dynamic environment where the robots are to collaborate. Strategic coordination entails directing the robots of the team, commanding which actions, such as kicking and moving, should be taken by each robot.
+% Research questions
+From this problem, the following research questions were formed:
+\begin{enumerate}
+    \item How effectively can \acf{mappo} manage the strategic coordination for a \acf{mrs} consisting of 6 robots, in terms of win ratio, within in the real-time, dynamic conditions of a \acf{ssl}-RoboCup Division B competitive match?
+    \item What level of competitiveness, in terms of kicking, receiving, dribbling, movement, sensing and communication capabilities, can a system relying primarily on consumer products, with a minimal custom-built elements, achieve with a limited budget of $20000\:$\acf{sek} and $4$-month time frame in a \acf{ssl}-RoboCup Division B match?
+\end{enumerate}
+
+%-------------------------------------------------------------------------------
+% Description of your approach to the task, methodology and why it is appropriate
+% Description of the main results and their limitations and what is new in your work
+%-------------------------------------------------------------------------------
+
+% Individual robot behaviour
+% Nav2
+The open source toolbox nav2 was used for: localization using \ac{amcl}; sensor fusion using an \ac{ekf}; and path planning using special versions of A$^*$ and \ac{dwa}\:\cite{macenski_desks_2023}\cite{macenski_open-source_2024}\cite{macenski_regulated_2023}\cite{merzlyakov_comparison_2021}\cite{macenski_marathon_2020}. 
+% ROS2
+\ac{ros2} and its tools, including nav2, make development quick and easy, which is ideal given the projects resource constraints\:\cite{macenski_robot_2022}. Additionally, nav2 has proven proficient at its tasks, developing something of even similar quality is beyond the scope of this project\:\cite{macenski_desks_2023}\cite{macenski_open-source_2024}\cite{macenski_regulated_2023}\cite{merzlyakov_comparison_2021}\cite{macenski_marathon_2020}.
+
+%-------------------------------------------------------------------------------
+% Overview of the paper
+%-------------------------------------------------------------------------------
+
+% Division
+The paper is divided into seven sections to help improve readability yet keep each section focused. 
+% Introduction
+Section\:\ref{section:introduction} introduces the project together with its purpose and motivation, as well as its main contributions. Additionally it will help introduce the reader to the field. 
+% Background
+Section\:\ref{section:background} covers background information as an aid for understanding the paper, this includes topics such as explanations of relevant algorithms. The already knowledgeable reader is welcome to skip this section.
+% Previous work
+Section\:\ref{section:previous_work} presents previous work, providing an overview of the current research in the field, together with their key outcomes and developments. It will also cover the main limitations and research gaps within the field which remain to be solved. This section can also be skipped should the reader be familiar with the state of \ac{ssl} and the latests advances in the field. Previous work (Section\:\ref{section:previous_work}) together with the Background (Section\:\ref{section:background}) describes the state of the art.
+% Ethical and societal considerations
+%Section\:\ref{section:ethical_and_societal_considerations} brings up ethical and societal considerations regarding the project. 
+% Method
+Section\:\ref{section:method} details the methods used and the reasoning behind these choices, and a comprehensive description of everything necessary to reproduce the work.
+% Results
+Section\:\ref{section_results} presents the results obtained.
+% Discussion
+Section\:\ref{section:discussion} discusses the results, the method and future work, connecting back to previous sections.
+% Conclusion
+Section\:\ref{section:conclusion} concludes the paper with the major outcomes of the project.
+
+%===============================================================================
+
+\begin{comment}
+The current sectioning is an example to illustrate the use of the Latex template to write the thesis report. The text for the sections and subsections should be adapted to reflect the content of each section best. For example, the "problem formulation" does not need to be a subsection of the introduction. It can be a complete
+the section on its own (if there is enough material). 
+
+The introduction can be seen as an expanded version of the abstract. The authors can have roughly the same structure but one or two paragraphs for each point in the summary. The following should be included:
+\begin{itemize}
+\item[--] Presentation of the field and topic of the work. This should come early and should capture interest. It can include a brief background and possibly important definitions of terms
+\item[--] You can briefly describe the intended audience for the report. Whom have you written for?
+\item[--] Brief overview of previous work and its limitations 
+\item[--] Presentation of the assignment including purpose and research questions
+\item[--] Description of your approach to the task, methodology and why it is appropriate
+\item[--] Motivation: why the task is interesting, what the relevant questions are, why your approach is good and why the results are essential.
+\item[--] description of the main results and their limitations and what is new in your work
+\item[--] overview of the report
+\end{itemize}
+
+You can discuss the significance of the conclusions, but the introduction should only briefly summarise the results. No specialized terminology or mathematics should be included here. 
+
+The introduction can be written as a funnel: area - sub-area - task - any sub-task - purpose. You then lead the reader towards a progressively more detailed and specific understanding of the task and purpose. By the end of the introduction, you and the reader should have a base of shared understanding. The reader should understand the task, the scope of the work, the methodology and its main contribution, i.e. what is new in your work. 
+
+The other sections of the report may also need a short introduction at the beginning so that the reader understands the purpose of each section and its place in the report.
+
+
+\subsection{Problem Formulation} 
+
+In this section, you formulate and specify the three essential things: purpose, question and motivation. First, you should present the task at a high level and in detail and discuss why it is essential. Next, explain the assumptions and limitations. You can then formulate the aim and question from the description of the task. Keep in mind that once the purpose is met, the question should be able to be answered. It is also essential that the purpose and motivation are linked. Once the purpose and question are clear, you can start developing the objectives which must be achieved to reach the purpose. Each objective should be small, achievable and possible to evaluate.  
+
+
+\emph{Tips!} Write down your research question on paper and put it next to the screen. This will help you remember the research question when working on the report.
+This is how to use the references~\cite{Berndtsson607210, Blomkvist2014} or~\citet{Turing1950} and this is how to use the acronym~\ac{svm} or~\ac{ml}.
+\end{comment}
+
+%===============================================================================

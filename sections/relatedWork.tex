@@ -1,0 +1,235 @@
+%===============================================================================
+\section{Previous work}
+%\section{Previous work/literature review (Related Work)}
+\label{section:previous_work}
+
+%-------------------------------------------------------------------------------
+% Responsible students
+%-------------------------------------------------------------------------------
+
+\textbf{Responsible students: Carl Larsson}
+
+%-------------------------------------------------------------------------------
+% Introduction
+%-------------------------------------------------------------------------------
+
+Previous work will first cover what other \ac{ssl}-RoboCup teams have developed, specifically three top contenders in the last 6 years, ER-Force, ZJUNlict and TIGERs Mannheim. Subsequently, other relevant papers within the related fields will be examined to yield additional insights. The section will conclude with an examination of the limitations and gaps which still persist in the field.
+
+%-------------------------------------------------------------------------------
+% SSL Teams
+%-------------------------------------------------------------------------------
+
+% TIGERs Mannheim, ZJUNlict, ER-FORCE (they are essentially the state of the art, what the top teams are doing)
+The current state of the art of \ac{ssl} is dominated by three top teams. Firstly, TIGERs Mannheim, the three time winners in the latest three \ac{ssl} tournaments and the five time top four finalist in the last five \ac{ssl} tournaments\:\cite{robocup_small_size_league_hall_2023}. Secondly, ZJUNlict, obtaining their first championship title in 2013, and continuing to place amongst the best almost every year after, and lately being well known for their dribbler design and capabilities, giving them their wins in 2018 and 2019\:\cite{robocup_small_size_league_hall_2023},\cite{ommer_extended_2024},\cite{huang_zjunlict_2019}. The third notable team is ER-Force, a consistent top contender since 2017 (except for 2023), obtaining four second places\:\cite{robocup_small_size_league_hall_2023}.
+
+% Dribbler
+A dribbler is used within the \ac{ssl}-RoboCup to receive and to control the ball, and a typical dribbler design is described in\:\cite{huang_zjunlict_2019}.
+The dribbler design used by TIGERs Manheim consists of a dribbler bar coated with \ac{tpu} having a Shore hardness of 60A without any spiral pattern\:\cite{ommer_extended_2024}. This is opposite to the dribbler used by ZJUNlict which has a spiral pattern, allowing lateral forces to centre the ball\:\cite{huang_zjunlict_2019}. The TIGERs Mannheim dribbler features a 2-\ac{dof} damping system, made from \ac{tpe} with a Shore hardness of 70A\:\cite{ommer_extended_2024},\cite{ommer_extended_2022}. ZJUNlict also employs a 2-\ac{dof} damping system, utilising a damping material both behind and under the dribbler system\:\cite{huang_zjunlict_2019}. The dribbler system employed by TIGERs Mannheim is a 2-point contact model\:\cite{ommer_extended_2024} instead of the 3-point model used by ZJUNlict\:\cite{huang_zjunlict_2019}, sacrificing having a periodic dynamic steady state of the ball for better robustness and less abrasion\:\cite{ommer_extended_2024},\cite{huang_zjunlict_2019}. TIGERs Mannheim's design was developed for reducing the abrasion on the bar caused by the ball, but suffers the drawback of not being able to centre the ball without the spiral pattern\:\cite{ommer_extended_2024}. Meanwhile, ZJUNlict's design showed very good dribbling and ball catching abilities\:\cite{huang_zjunlict_2019}. The TIGERs Mannheim dribbler device has \ac{ir} emitters and sensors forming a barrier (or horizontal break beam) in order to detect the presence of the ball and its position\:\cite{ryll_extended_2020}. The dribbler motor in TIGERs Mannheim's robot runs at around $17000\:$\ac{rpm}\:\cite{ryll_extended_2020}. ZJUNlict uses feedback control instead of running with a constant \ac{rpm} speed for the dribbler motor\:\cite{huang_zjunlict_2019}.
+
+% Kicker
+The kicker system used by TIGERs Mannheim contains two plungers, one for straight kicks and one for chip kicks\:\cite{ryll_extended_2020}. The plungers have dampers made out of \ac{tpu}98 for reducing structural damage in scenarios where the kicker is activated but the ball is absent\:\cite{ryll_extended_2020}. Rectangular shaped plungers are used to remove the ability of rotation and thus limiting the plungers to 1-\ac{dof}\:\cite{ryll_extended_2020}. In order to prevent strong deceleration by the magnetic field after activation, the design for the plungers were made out of both ferromagnetic steel and aluminium (not ferromagnetic), rather than entirely being made out of a ferromagnetic material\:\cite{ryll_extended_2020}.
+% Electronics
+Multiple \ac{ssl} teams adapt the flyback topology to generate the desired high voltages for kicking, charging the capacitors and later discharging through the solenoid to activate the kicker\:\cite{bergmann_er-force_2023}. The use of a flyback converter brings a major advantage in terms of the output voltage, it is galvanically isolated from the input circuit\cite{bergmann_er-force_2023}. However a flyback circuit can contribute with significant \ac{emf}\:\cite{bergmann_er-force_2022}.
+
+% Wheels
+Aluminium wheels are favoured by TIGERs Mannheim over 3D-printed because of how prone 3D-printed wheels are to breaking\:\cite{ryll_extended_2020}. Their subwheels have friction bearings offering impact resistance, vibration dampening and wear resistance\:\cite{ryll_extended_2020}. Additionally, the subwheels use X-rings instead of O-rings for the better traction, coming at the cost of higher wear\:\cite{ryll_extended_2020}. Direct drive is favoured by TIGERs Mannheim for its precise control and higher top speed, it also reduces the complexity of the power train\:\cite{ryll_extended_2020}.
+% Motor control
+The Bots also employ direct drive, this is realized using \ac{foc} which is a common approach for motor control\:\cite{veeraghanta_2024_2024},\cite{abousaleh_2024_2024},\cite{liang_icrs-fc_2024},\cite{delft_mercurians_delft_2024},\cite{salehi_immortals_2024}. 
+ER-Force previously employed a \ac{pid} controller for motor control but has switched to a state-space controller for its superior performance and the fact that it accounts for the internal state of the system\:\cite{lobmeier_er-force_2018}.
+% Motor drivers
+ZJUNlict uses an ESP32 for motor driver control\:\cite{huang_zjunlict_2023}.
+The Bots choice in components for the motor driver are all in an effort to reduce size and cost\:\cite{veeraghanta_2024_2024}. Similar design considerations can be seen in UBC Thunderbots design, which aimed to reduce size, and making soldering and debugging easier\:\cite{abousaleh_2024_2024}. Some teams like Immortals, design their motor driver boards to be modular, making repairs easier\:\cite{salehi_immortals_2024}.
+% Encoder
+It is advised to not use photoelectric encoders since collisions can result in light interference\:\cite{wu_compilation_2024}, magnetic encoders are instead more prominent amongst the \ac{ssl}-RoboCup teams\:\cite{wu_compilation_2024},\cite{veeraghanta_2024_2024}.
+
+% Lower center of gravity (move capacitors)
+The top teams, including ZJUNlict and TIGERs Mannheim, have all focused on trying to lower the centre of gravity of their robots\:\cite{huang_zjunlict_2020}. 
+% Cover
+The robot cover for the TIGERs Mannheim robots is 3D-printed and made out of \ac{petg} with an adhesive film over the entire cover\:\cite{ryll_extended_2020}. ER-Force instead uses polystyrene as the cover material\:\cite{bohm_er-force_2024}.
+% Pattern/ID system
+TIGERs Mannheim's robots have cutouts in the top plate, which together with a \ac{pcb} with colour sensors allows the robots to check their own colour pattern when illuminating \acp{led}\:\cite{ommer_extended_2022}. The robot can therefor check its own ID and team automatically in a robust and simple manner\:\cite{ommer_extended_2022}.
+
+% Sensors
+Both TIGERs Mannheim and ZJUNlict use a $9$-\ac{dof} \ac{imu} and wheel encoders\:\cite{huang_zjunlict_2019},\cite{alami_robocup_2022}. TIGERs Mannheim also employs a camera on their robots\:\cite{alami_robocup_2022}.
+% Vision algorithm
+They use scanline rendering for processing and interpreting the vision data from their onboard camera\:\cite{ryll_extended_2020}.
+
+% Communication
+\ac{spi} is not used with multiple clients because of how unreliable it is, the entire bus can break if one client fails, the more reliable option of \ac{uart} is hence favoured\:\cite{ryll_extended_2020}. The use of WiFi frequency bands around $2.4\:$\ac{ghz} is common for communication and is used by TIGERs Mannheim and was used by ZJUNlict\:\cite{ommer_extended_2024},\cite{zhao_zjunlict_2024}. ZJUNlist switched to a $74\:$\ac{hz}\footnote{This is likely an error in the original paper, it is assumed that $74\:$\ac{mhz} is the correct value.} \ac{udp} WiFi communication system utilising Protobuf, this system obtained superior results compared to their previous communication setup\:\cite{zhao_zjunlict_2024}. ZJUNlict's new system has achieved communication rates of $4.7\:$\ac{ms} per package without any observed data loss\:\cite{zhao_zjunlict_2024}.
+
+% Path planning
+Most teams, including TIGERs Mannheim and ER-Force have transitioned from algorithms like \ac{rrt} (a common algorithm in \ac{ssl}\:\cite{ommer_extended_2019},\cite{wendler_er-force_2020}) to trajectory-sampling-based methods which account for the platforms physical limitations, achieving amongst the lowest crash rates\:\cite{ommer_extended_2024},\cite{wendler_er-force_2020}. ZJUNlict uses Dubins Curve algorithm for global path planning and a bang-bang controller together with a \ac{pid} controller for local path planning\:\cite{huang_zjunlict_2023}.
+% ZJUNlict uses RRT? \cite{huang_zjunlict_2019}
+
+% AI
+The \ac{ai} used by TIGERs Mannheim is a tree-based approach to learning\:\cite{ryll_extended_2018}. Similarly, ZJUNlict uses tree-based approaches for a majority of the strategy, control and decision making\:\cite{chen_zjunlict_2018}. ER-Force uses what they call an agent-based approach for \ac{ai} strategy planning, where each robot has its own agent, together with one central coordinator\:\cite{lobmeier_er-force_2018}.
+
+% Onboard processing
+TIGERs Mannheim uses a Raspberry PI 3 for onboard processing of heavier computation items, in their case computer vision algorithms\:\cite{ryll_extended_2020}, and an STM32 as the main control unit\:\cite{ommer_extended_2024}. Meanwhile ZJUNlict uses a Raspberry PI CM4 as the main control unit, having previously used an STM32\:\cite{zhao_zjunlict_2024}. ZJUNlict utilises \ac{gpu} processing to perform larger computations significantly faster\:\cite{huang_zjunlict_2020}. 
+% Robot software
+%The robot control software developed by ZJUNlict uses four threads, one for movement, one for kicking, and two for communication\:\cite{zhao_zjunlict_2024}.
+
+%-------------------------------------------------------------------------------
+% Other related research
+%-------------------------------------------------------------------------------
+
+% Transition
+This concludes the \ac{ssl}-specific research, and the paper progresses to previous work in other related fields.
+
+%----------------
+% Kicker
+%----------------
+
+%----------------
+% Sensors
+%----------------
+Sensors commonly used by mobile robots are\:\cite{alatise_review_2020}:
+\begin{itemize}
+    \item Wheel encoders
+    \begin{itemize}
+        \item optical
+        \item magnetic
+    \end{itemize}
+    \item \ac{lidar}
+    \item 
+\end{itemize}
+
+%----------------
+% Localization
+%----------------
+% Transition
+
+% AI
+The use of \ac{ai} for localization has seen a significant increase in the agricultural domain\:\cite{rahman_tahir_localization_2022}.
+% KF
+A common and efficient localization method is the \ac{kf}, which has the main benefit of not being computationally demanding\:\cite{alatise_review_2020}.
+% Monte carlo
+\ac{mcl} is a widely used localization method\:\cite{akail_reliability_2018}.
+% Vision based
+The use of vision for navigation is currently gathering attention as a research area\:\cite{alatise_review_2020}.
+% Topological
+There has recently been a shift from geometrical modelling localization towards topological modelling for localization\:\cite{alatise_review_2020}.
+% slam
+
+
+%----------------
+% Sensor fusion
+%----------------
+% Transition
+Sensor fusion is extensively used in many robotic areas, with applications like localization and object recognition\:\cite{alatise_review_2020}.
+
+%----------------
+% Object recognition
+%----------------
+% Transition
+Continuing with object recognition,
+% Common algorithms
+the \ac{dog} algorithm is frequently used for computing interest points\:\cite{loncomilla_object_2016}. Another widely used algorithm is the Harris corner detector\:\cite{alatise_review_2020}.
+Both \ac{sift} and \ac{surf} see substantial use as descriptor computation algorithms\:\cite{loncomilla_object_2016}.
+A number of algorithms are used for geometric verification, amongst these are the common \ac{ransac} and Hough methods\:\cite{loncomilla_object_2016},\cite{alatise_review_2020}.
+Both of these methods are resilient to outliers, being able to accurately estimate parameters even in the presence of substantial amount of outliers in the data\:\cite{alatise_review_2020}. 
+% AI
+The survey by Loncomilla et al. noted that while deep learning is a trending research area within computer vision for object recognition, its application to robotics was unrealistic as of 2016 because of its computational demands\:\cite{loncomilla_object_2016}.
+
+Multi-agent robot control has many possibilities. From previous RoboCup contesters, strategy planning has been done by decision trees.  A previous RoboCup team was using two methods for strategy planning. Value-based strategy and deep \ac{rl}. Value-based is extracted environment information for the computation of the best decision. And \ac{rl} were made by \ac{ppo} model \cite{huang_zjunlict_2023}. 
+
+\ac{mappo} has been developed in various environments, mainly video games or simple multi-agent simulations. Some examples is \ac{smac} and \ac{grf} \cite{yu_surprising_2022}
+
+%RNN and lstm
+%LSTM
+To make the agents learn from previous observations and experiences, a replay buffer can be used. By this a Long short-term memory (LSTM). One report configured the LSTM by a sequence of $500$ time steps and backpropagate through 25 time-steps each\cite{lin_tizero_2023}. 
+
+%States
+The environmental states for the agents are player information, player ID, ball information, teammate information, opponent
+information, and current match information. The problem of using this large amount of environmental information can be reduced by using Multi-layer Perceptron (MLP) \cite{lin_tizero_2023}.
+
+%google football envirionment
+
+
+One interesting study is simulating a virtual football game environment created by Google, the multi-agent football players were able to get a high accuracy by Multi-Agent Proximal Policy Optimisation (MAPPO)\cite{yu_surprising_2022} %In previous works
+
+Shared observation state:
+The curse of dimensionality happens when the number of agents increases and each agent has a huge observation space.
+
+
+
+%----------------
+% Path planning
+%----------------
+% Transition
+A number of path planning algorithms are common in literature, a few which stand out will be covered here to provide the reader with a better perspective of this papers chosen method and its upsides and downsides, especially in relation to the current landscape of methods.
+% Global
+Beginning with global path planning, specifically with classical graph based search algorithms. The further subdivision of this category into classical and heuristic based, as is done in\:\cite{katona_obstacle_2024}, will not be done in this paper.
+% Graph vs sampling
+Classical graph based search algorithms (like A$^*$) are generally less common in path planning applications containing dynamic elements, compared to random sampling algorithms (like \ac{rrt})\:\cite{cai_mobile_2021}.
+% Garph based
+Graph based methods mainly see use in simple scenarios which can be discretized, the result of this is that the generated paths generally are not smooth\:\cite{reda_path_2024}. A$^*$ is amongst the most well-known and widely used graph based algorithms, and it is often combined with \ac{dwa}\:\cite{reda_path_2024}. There has been a lot of research dedicated to A$^*$, with plenty of extensions of the original method\:\cite{reda_path_2024}.
+% Sampling
+Random sampling algorithms are more efficient but can struggle with environments which are object dense and contain narrow sections\:\cite{cai_mobile_2021},\cite{liu_path_2023}. 
+\ac{rrt} is a prevalent random sampling algorithm, it is viable in larger dynamic environments but the original method has no search direction leading to poor convergence speed\:\cite{reda_path_2024},\cite{katona_obstacle_2024}.
+Bidirectional \ac{rrt} offers better search speed and is more efficient than normal \ac{rrt}, thus making it a widely used algorithm\:\cite{gao_research_2021}. \ac{rrt}$^*$ is also an important extension since it converges to the optimal path, given an adequate cost function (heuristic)\:\cite{katona_obstacle_2024}.
+Random sampling algorithm research mainly focuses on the random sampling process, branch expansion strategy and combining algorithms with mobile robot kinematics\:\cite{liu_path_2023}. But a lot of research has also been done to try and remedy random sampling algorithms poor performance in environments with narrow passages and with a high density of obstacles\:\cite{liu_path_2023}.
+% Probabilistic
+Probabilistic methods like \ac{prm} offer an alternative to classical graph based search algorithms with better efficiency, but their computational demands and memory demands are still significant\:\cite{katona_obstacle_2024}. 
+%Of special interest for further development of algorithms is Voronoi graphs\:\cite{katona_obstacle_2024}. 
+% Distinction
+Probabilistic methods can overlap with sampling based methods, making a clear distinction challenging, but this paper attempts to separate the two.
+% AI
+The use of \ac{ai} for path planning has seen an increase in recent years, one of their main advantages is that they can learn the non-linear behaviour of a plant\:\cite{katona_obstacle_2024},\cite{borkar_stability_2023}. 
+\ac{dl} and \ac{rl} are trending research areas and are commonly used for path planning\:\cite{cai_mobile_2021},\cite{katona_obstacle_2024},\cite{borkar_stability_2023}. Some \ac{rl} algorithms have obtained promising results in densely populated dynamic environments\:\cite{chen_socially_2018}, however \ac{rl} methods require a lot of memory\:\cite{cai_mobile_2021}.
+One of the most popular \ac{ai} algorithms for path planning are \acp{ann}\:\cite{borkar_stability_2023}.
+% Other
+%Other potential methods include optimization-based, interpolation-based and meta-heuristic based\:\cite{reda_path_2024}.
+
+% Local
+Before continuing with local path planning, it should be noted that a clear separation between the two is difficult since some of these algorithms can be used for global path planning as well.
+% APF
+A common local path planning algorithm in literature is \ac{apf}, which has low computational complexity and is capable of handling both dynamic and static obstacles, but can get stuck in local minima\:\cite{reda_path_2024},\cite{katona_obstacle_2024}. \ac{apf} research is mainly focused on the major challenge of local minima\:\cite{liu_path_2023}. Various proposals have emerged for solving this, including; using global path planning\:\cite{reda_path_2024}, virtual target points\:\cite{katona_obstacle_2024}, and disruption of equilibria forces by employing random attractor forces\:\cite{katona_obstacle_2024}.
+% VO
+\ac{vo} has gained some attention lately with extensions like \ac{ovvo}\:\cite{kim_study_2016},\cite{cai_mobile_2021},\cite{vesentini_survey_2024}. Some modern versions of this algorithm are able to consider acceleration constraints of the platform\:\cite{van_den_berg_reciprocal_2011}, holonomic and non-holonimc robots\:\cite{martinoli_optimal_2013}, as well as having branched into multi agent scenarios\:\cite{van_den_berg_reciprocal_2008},\cite{cai_mobile_2021},\cite{vesentini_survey_2024}. However, it assumes spherical objects and perfect sensing at all ranges, it can also be computationally expensive, and generated trajectories may not be smooth\:\cite{vesentini_survey_2024}. For a comprehensive detailing of \ac{vo} and \ac{vo} research, see the survey by Vesentini et al.\:\cite{vesentini_survey_2024}.
+% DWA
+A very common algorithm for wheeled robots in research is \ac{dwa}\:\cite{katona_obstacle_2024}. Numerous extensions of \ac{dwa} has been developed, these include extending the method to omni-directional robots\:\cite{brock_high-speed_1999}, and addressing convergence and deadlock situations\:\cite{ogren_convergent_2005}. \ac{dwa} has been found to be well suited for dynamic and online\footnote{What is sometimes incorrectly refereed to as 'real-time'.} applications with its efficient planning, but it can get stuck in local minima, additionally it can have convergence issues and has been noted to struggle in complex environments\:\cite{vesentini_survey_2024},\cite{katona_obstacle_2024}.
+% MPC
+The \ac{mpc} algorithm offers easy implementation and good local path planning, but requires linearization (if non-linear dynamic models are used) and powerful hardware to run\:\cite{vesentini_survey_2024},\cite{katona_obstacle_2024}. However the main appeal of \ac{mpc} is that it can provide theoretical guarantees of stability (or lack thereof) and performance\:\cite{katona_obstacle_2024}.
+
+% Nature inspired path planning algorithms
+A comprehensive review by Liu et al. found that a significant portion of path planning papers concerned nature-inspired algorithms, for both local and global path planning\:\cite{liu_path_2023}. Among these algorithms, a few  stand out: \ac{bfo}, which has seen wide use because of its simplicity and efficiency; the powerful \ac{abc}, which has garnered attention among experts and scholars; \ac{pso}, which has seen wide use, most notably for offering fast convergence; and \ac{csa} with Levy flight, having garnered interest because of its resilience to falling into local minima and the small amount of parameters one has to set up\:\cite{liu_path_2023},\cite{katona_obstacle_2024}.
+
+% Hybrid
+A trend in current path planning research is to combine algorithms into hybrid solutions to negate one algorithms flaws and merge their strengths, thus obtaining better performance\:\cite{katona_obstacle_2024},\cite{reda_path_2024}.
+
+%-------------------------------------------------------------------------------
+% Limitations and gaps in the current research (essentially what still needs to be improved)
+%-------------------------------------------------------------------------------
+
+% Transition
+The final topic addressed in this section is the limitations and research gaps that still remain within the research of this field.
+
+% SSL Limitaions
+A common challenge in \ac{ssl}-RoboCup is the unreliable \ac{ssl}-vision system which supplies position information and detects elements on the playing field\:\cite{huang_zjunlict_2019},\cite{bohm_er-force_2024},\cite{melo_towards_2022}. \ac{ssl}-vision performs colour block recognition of objects on the field, this brings with it various problems, including noise, light interference, objects missing, overlap from multiple cameras having different parameters and distortion\:\cite{huang_zjunlict_2019}. Some teams, like ZJUNlict therefore develop their own methods to negate these flaws, creating confidence estimations of the data and using \acp{kf} to reduce the noise\:\cite{huang_zjunlict_2019},\cite{bergmann_er-force_2023}. UBC Thundebots instead favours using a \ac{pf} approach over their previous \ac{kf} since they found that the \ac{kf} can have a long delay or latency\:\cite{macdougall_2018_2018}. ER-Force further urges teams to use methods to minimise the errors present in \ac{ssl}-vision, including using statistical methods to limit noise\:\cite{bohm_er-force_2024}. They also suggest the following practices\:\cite{bohm_er-force_2024}:
+\begin{itemize}
+    \item Evaluate \ac{ssl}-vision data based on the last couple of data points, not just the most recent
+    \item Use hysteresis to avoid rapid switching in binary decisions
+\end{itemize}
+It is however important to note that there are no methods that can completely remedy these errors and inaccuracies\:\cite{bohm_er-force_2024}.
+
+% simulation vs real world validation
+Validating research experimentally remains limited, with most path planning research only validating through simulation\:\cite{borkar_stability_2023}. 
+% Kinematics vs dynamics
+Most robotics research has also primarily focused on kinematics of robots and not on the dynamics of robot platforms\:\cite{borkar_stability_2023}.
+% Multi agent and dynamic rare
+Multi-agent path planning and path planning in dynamic scenarios remains relatively unexplored in research\:\cite{borkar_stability_2023}. Several of these research gaps are addressed by \ac{ssl}-RoboCup, and therefore so does the work of this paper.
+% This paper
+However, this paper does not aim to directly target or solve any existing limitations in the current research. The hope is that this project will bring \ac{mdu} into the \ac{ssl}-RoboCup community with a longstanding team capable of eventually helping further the intelligent systems research, and that this would help contribute more than this single paper could achieve alone.
+
+%===============================================================================
+
+\begin{comment}
+The purpose of this section is to place your work in context and compare it with previous published work and results in the field. This section should be thorough. You describe here existing knowledge and how this is extended by your work. It should include analyses of previous work, describing, for example, how different methods differ. You should point out the main similarities and differences in terms of task, approach/methodology and results. It is important that you discuss in a neutral way the advantages and disadvantages of your own work compared to that of others.
+
+This also creates an expectation of the contribution of your work, the reader learns here about the limitations of previous work and why your task is a challenge.. 
+
+Together, this section along with the background will introduce the state of the art/state of practice and its shortcomings, the importance of the assignment and what your work will be compared to.
+\end{comment}
+
+%===============================================================================
